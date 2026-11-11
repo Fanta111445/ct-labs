@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Собрать лабораторную",
+            "type": "process",
+            "command": "g++",
+            "args": [
+                "-std=c++17",
+                "-Wall",
+                "-Wextra",
+                "main.cpp",
+                "-o",
+                "lab2.exe"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "Запустить лабораторную",
+            "type": "process",
+            "command": "${workspaceFolder}\\lab2.exe",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "dependsOn": "Собрать лабораторную",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "focus": true
+            }
+        }
+    ]
+}
