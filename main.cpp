@@ -29,7 +29,7 @@ int main() {
               << "|          i |           x[i] |           F(x) |           G(x) |\n"
               << border << std::fixed << std::setprecision(6);
 
-    for (long long i = 0; i <= n; ++i) {
+    for (int i = 0; i <= n; ++i) {
         const double x = a + i * h;
         const double f = 2 - std::cos(x);
         const double g = std::exp(-x * x);
