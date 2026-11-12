@@ -1,42 +1,44 @@
+#include <cctype>
 #include <cmath>
 #include <iomanip>
 #include <iostream>
-#include <sstream>
-#include <string>
 
 int main() {
-    const double pi = std::acos(-1.0);
-    double a = -pi;
-    double b = pi;
-    int n = 10;
+    double a, b;
+    int n;
 
-    std::cout << "Lab 2, variant 12\n"
-              << "Enter A B N, or press Enter for -pi, pi, 10: ";
-
-    std::string line;
-    if (!std::getline(std::cin, line)) {
+    std::cout << "Enter A: ";
+    if (!(std::cin >> a)) {
+        std::cerr << "A must be a number.\n";
         return 1;
     }
 
-    if (line.find_first_not_of(" \t\r") != std::string::npos) {
-        std::istringstream input(line);
-        char extra;
-        if (!(input >> a >> b >> n) || input >> extra
-            || a > b || n <= 0 || !std::isfinite(b - a)) {
-            std::cerr << "Invalid input. Enter A <= B and a positive integer N.\n";
-            return 1;
-        }
+    std::cout << "Enter B: ";
+    if (!(std::cin >> b) || a >= b || !std::isfinite(b - a)) {
+        std::cerr << "Enter finite bounds with A < B.\n";
+        return 1;
+    }
+
+    std::cout << "Enter N: ";
+    if (!(std::cin >> n) || n <= 0) {
+        std::cerr << "N must be a positive integer.\n";
+        return 1;
+    }
+
+    // Reject a fractional part or other characters attached to N.
+    const int next = std::cin.peek();
+    if (next != std::char_traits<char>::eof() && !std::isspace(next)) {
+        std::cerr << "N must be a positive integer.\n";
+        return 1;
     }
 
     const double h = (b - a) / n;
     const char* border = "+------------+----------------+----------------+----------------+\n";
-
     std::cout << "\nh = " << std::setprecision(10) << h << "\n\n"
               << border
               << "|          i |           x[i] |           F(x) |           G(x) |\n"
               << border << std::fixed << std::setprecision(6);
 
-    // У N интервалов N + 1 точка, включая начало и конец отрезка.
     for (long long i = 0; i <= n; ++i) {
         const double x = (i == n) ? b : a + i * h;
         const double f = 2.0 - std::cos(x);

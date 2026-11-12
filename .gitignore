@@ -1,4 +1,5 @@
 *.exe
+!/lab2.exe
 *.pdb
 *.obj
 ~$*.docx
